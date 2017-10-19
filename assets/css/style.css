@@ -1,0 +1,24 @@
+.btn-bs-file{
+    position:relative;
+}
+.btn-bs-file input[type="file"]{
+    position: absolute;
+    top: -9999999;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    width:0;
+    height:0;
+    outline: none;
+    cursor: inherit;
+}
+
+li{
+
+	margin-top: 10px;
+}
+
+.windowSelect{
+  width: 120px;
+  margin-left: 20px;
+  padding-left: 40px;
+}

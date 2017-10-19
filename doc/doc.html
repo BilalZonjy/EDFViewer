@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Bilal Zonjy">
+  <meta name="keywords" content="EDF, JavaScript,Plotly.js,moment.js,fili,jquery,bootstrap,HTML, CSS,">
+  <meta name="description" content="edf Viewer">
+  
+
+  <title>EDF Viewer Manual</title>
+
+      <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+      <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-glyphicons.css">
+      <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+      <style>
+<!--
+ /* Font Definitions */
+ @font-face
+  {font-family:"Cambria Math";
+  panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+  {font-family:"Calibri Light";
+  panose-1:2 15 3 2 2 2 4 3 2 4;}
+@font-face
+  {font-family:Calibri;
+  panose-1:2 15 5 2 2 2 4 3 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+  {margin-top:0in;
+  margin-right:0in;
+  margin-bottom:8.0pt;
+  margin-left:0in;
+  line-height:107%;
+  font-size:11.0pt;
+  font-family:"Calibri",sans-serif;}
+p.MsoTitle, li.MsoTitle, div.MsoTitle
+  {mso-style-link:"Title Char";
+  margin:0in;
+  margin-bottom:.0001pt;
+  font-size:28.0pt;
+  font-family:"Calibri Light",sans-serif;
+  letter-spacing:-.5pt;}
+p.MsoTitleCxSpFirst, li.MsoTitleCxSpFirst, div.MsoTitleCxSpFirst
+  {mso-style-link:"Title Char";
+  margin:0in;
+  margin-bottom:.0001pt;
+  font-size:28.0pt;
+  font-family:"Calibri Light",sans-serif;
+  letter-spacing:-.5pt;}
+p.MsoTitleCxSpMiddle, li.MsoTitleCxSpMiddle, div.MsoTitleCxSpMiddle
+  {mso-style-link:"Title Char";
+  margin:0in;
+  margin-bottom:.0001pt;
+  font-size:28.0pt;
+  font-family:"Calibri Light",sans-serif;
+  letter-spacing:-.5pt;}
+p.MsoTitleCxSpLast, li.MsoTitleCxSpLast, div.MsoTitleCxSpLast
+  {mso-style-link:"Title Char";
+  margin:0in;
+  margin-bottom:.0001pt;
+  font-size:28.0pt;
+  font-family:"Calibri Light",sans-serif;
+  letter-spacing:-.5pt;}
+span.TitleChar
+  {mso-style-name:"Title Char";
+  mso-style-link:Title;
+  font-family:"Calibri Light",sans-serif;
+  letter-spacing:-.5pt;}
+.MsoChpDefault
+  {font-family:"Calibri",sans-serif;}
+.MsoPapDefault
+  {margin-bottom:8.0pt;
+  line-height:107%;}
+@page WordSection1
+  {size:8.5in 11.0in;
+  margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+  {page:WordSection1;}
+-->
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse" style="background-color: #222222  border: solid green 5px; ">
+
+<div class="row" style="height: 100px;">
+<div class="col-sm-5" ><div style="color: #0275d8;font-size: 30px;font-weight: bold;padding-left: 30px;padding-top: 25px;">EDF Viewer Manual </div> </div>
+<div class="col-sm-7" ></div>
+
+</div>
+</nav>
+
+
+
+
+
+<div class='WordSection1 container'>
+
+<p class=MsoTitle><b><span style='color:#5B9BD5'>Introduction: </span></b></p>
+
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>The viewer
+is written using javascript, HTML and CSS, it runs completely on the client
+side using the browser and it can run offline. </span></p>
+
+<p class=MsoTitle><b><span style='color:#5B9BD5'>Navigation bar:</span></b></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal align=center style='text-align:center'><img width=624
+height=387 id="Picture 2" src="Documation_files/image001.jpg"></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoTitle><b><span style='color:#5B9BD5'>Montage :</span></b></p>
+
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>Montage tab
+opens once the file is chosen, and it can be called from  <img width=100
+height=20 id="Picture 10" src="Documation_files/image002.png"></span></p>
+
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-size:20.0pt;line-height:107%'><img width=304 height=305
+id="Picture 28" src="Documation_files/image003.png"></span></p>
+
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>It allows to
+arrange channels into 3 categories:</span></p>
+
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>EEG, EKG and
+others</span></p>
+
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>the EEG and
+EKG categories can be filtered using a high pass filter through <img
+width=75 height=20 id="Picture 5" src="Documation_files/image004.png"> unlike
+“others”. Channels in these categories could be referenced to another channel
+or could be display as it was recorded in the EDF file after scaling by checking<img
+width=50 height=20 id="Picture 7" src="Documation_files/image005.png"> before selecting them.</span></p>
+
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-size:20.0pt;line-height:107%'><img width=300 height=301
+id="Picture 32" src="Documation_files/image006.png"></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>“Others”
+category is for polygraph and any additional channels, moving the cruiser over
+the channel is going to display the value of the channel at that point </span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-size:20.0pt;line-height:107%'><img width=632 height=327
+id="Picture 3" src="Documation_files/image007.png"></span></p>
+
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>To remove a
+channel from the montage just choose it from montage column and click <img
+width=36 height=20 id="Picture 6" src="Documation_files/image008.png">.</span></p>
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>
+
+<p class=MsoTitle><b><span style='color:#5B9BD5'>Contact :</span></b></p>
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>Bilal Zonjy, MD</span></p>
+<p class=MsoNormal><span style='font-size:17.0pt;line-height:107%'>Email: bxz142@case.edu</span></p>
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>
+
+
+<p class=MsoTitle><b><span style='color:#5B9BD5'>License :</span></b></p>
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>
+        <div class="row">
+         
+        <div class="col-sm-1" style="padding-top: 3px;"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src='assets/img/creativecommons.png' /></a></div>
+        <div class="col-sm-10" >        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a></div>
+        <div class="col-sm-1"></div> 
+        </div>
+      </div>
+
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>
+<p class=MsoNormal><span style='font-size:20.0pt;line-height:107%'>&nbsp;</span></p>s
+
+</div>
+
+
+</body>
+</html>
