@@ -2,113 +2,136 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="author" content="Bilal Zonjy">
-  <meta name="keywords" content="EDF, JavaScript,Plotly.js,moment.js,jquery,bootstrap,HTML, CSS,">
-  <meta name="description" content="edf Viewer">
-  <title>EDF Viewer</title>
-      <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
-      <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-glyphicons.css">
-      <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-      <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="author" content="Bilal Zonjy">
+    <meta name="keywords" content="EDF, JavaScript,Plotly.js,moment.js,jquery,bootstrap,HTML, CSS,">
+    <meta name="description" content="edf Viewer">
+    <title>EDF Viewer</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-glyphicons.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body onresize="sizeChanged()">
-<div class=" row" style="background-color: #222222; margin-left:0px;margin-right: 0px;" >
-<nav class="navbar navbar-inverse" style="background-color: #222222;margin-bottom: 1px; padding-bottom: 5px; padding-right: 10px;width: 1300px;margin-left: auto ;margin-right: auto; border-color: #222222">
-<div class="row" >
-<div class="col-sm-2" ><div style="color: #0275d8;font-size: 30px;font-weight: bold;padding-left: 10px;padding-top: 25px;">EDF Viewer</div> 
-</div>
-<div class="col-sm-8" style="margin-right: 0px; ">
-  <div class="row" style=" margin-top: 10px;">
-    
-    <div class="col-sm-8" >
-        <div class="row">
-          <div class="col-sm-2" style="padding-right: 0px;">
-            <label class="btn-bs-file btn btn-lg btn-primary"  style="height: 35px;padding-top: 5px;width: 150px; font-weight: bold; font-size: 20px;">
-                Open
-                <input type="file" id="file-input" accept=".edf"" class="custom-file-input">
+    <div class="container plotDivs" style="width: 100%;height: 100%;background-color:#222222;">
+        <div class=" row" style="background-color: #222222; margin-left:0px;margin-right: 0px;">
+            <nav class="navbar navbar-inverse" style="background-color: #222222;margin-bottom: 1px; padding-bottom: 5px; padding-right: 10px;width: 1300px;margin-left: auto ;margin-right: auto; border-color: #222222">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div style="color: #0275d8;font-size: 30px;font-weight: bold;padding-left: 10px;padding-top: 25px;">EDF Viewer</div>
+                    </div>
+                    <div class="col-sm-8" style="margin-right: 0px; ">
+                        <div class="row" style=" margin-top: 10px;">
+
+                            <div class="col-sm-8">
+                                <div class="row">
+                                    <div class="col-sm-2" style="padding-right: 0px;">
+                                        <label class="btn-bs-file btn btn-lg btn-primary" style="height: 35px;padding-top: 5px;width: 150px; font-weight: bold; font-size: 20px;">
+                                            Open
+                                            <input type="file" id="file-input" accept=".edf" " class="custom-file-input ">
             </label>
           </div>
-          <div class="col-sm-10" style="padding-left: 0px;" >
-            <div id="ptname" style="background-color: #ffffff; height: 35px;margin-left: 0px;padding-right: 10px;padding-left: 5px; font-size: 14px;padding-top: 7px;"></div>
+          <div class="col-sm-10 " style="padding-left: 0px; " >
+            <div id="ptname " style="background-color: #ffffff; height: 35px;margin-left: 0px;padding-right: 10px;padding-left: 5px; font-size: 14px;padding-top: 7px; "></div>
           </div>
         </div>
     </div>
-    <div class="col-sm-2" style=" margin-right: 0px; ">
-        <li class="dropdown" style="margin-right: 5px;">
-                <div class="dropdown-toggle btn btn-primary" id="montage" style="width: 120px;position: absolute;top: -10px; left: -5px;" data-toggle="dropdown"  >Montage
-                <span class="caret"></span></div>
-        </li>
+    <div class="col-sm-2 " style=" margin-right: 0px; padding-left: 5px; ">
+  <div class="btn-primary " style="height: 35px;margin: 0px;border-radius: 5px;width: 112px; ">
+    <div class=" btn-primary " id="montage " style="width: 75px;height: 35px; position: absolute; left: 5px;padding-left: 7px;padding-top: 7px;border-radius: 5px; ">Montage :
     </div>
-    <div class="col-sm-2" style="padding-left: 0px;" >
-        <div class="dropdown-toggle btn btn-primary"  aria-pressed="false" style="width: 125px;height: 35px;" data-toggle="dropdown"  ><span >Filters </span><span class="caret"></span></div>
-        <ul class="dropdown-menu" style="position: absolute;left: -20px; padding-left: 20px;">
+<div class="dropdown-toggle btn-primary "  aria-pressed="false " style="width: 36px;height: 35px;position: absolute;left:80px;padding-left: 7px;padding-top: 7px;border-radius: 5px; " data-toggle="dropdown "  ><span id="general_montage_num ">1 </span><span class="caret "></span></div>
+        <ul class="dropdown-menu " style="position: absolute;left: -20px;padding: 25px; ">  
+        <div class="btn-group " data-toggle="buttons ">
+          <li style="width:120px "><label class="btn btn-primary active montageSelect Montage1 ">
+            <input type="radio " name="Montage " class="montageSelect Montage1 " autocomplete="off " checked>&nbsp;&nbsp;Montage 1 
+          </label></li>
+          <li style="width:120px "><label class="btn btn-primary active montageSelect Montage2 ">
+            <input type="radio " name="Montage " class="montageSelect Montage2 " autocomplete="off " >&nbsp;&nbsp;Montage 2 
+          </label></li>
+          <li style="width:120px "><label class="btn btn-primary active montageSelect Montage3 ">
+            <input type="radio " name="Montage " class="montageSelect Montage3 " autocomplete="off " >&nbsp;&nbsp;Montage 3 
+          </label></li>
+          <li style="width:120px "><label class="btn btn-primary active montageSelect Montage4 ">
+            <input type="radio " name="Montage " class="montageSelect Montage4 " autocomplete="off " >&nbsp;&nbsp;Montage 4 
+          </label></li>
+          <li style="width:120px "><label class="btn btn-primary active montageSelect Montage5 ">
+            <input type="radio " name="Montage " class="montageSelect Montage5 " autocomplete="off " >&nbsp;&nbsp;Montage 5 
+          </label></li>
+          <li style="width:120px "><label class="btn btn-primary active montageSelect Montage6 ">
+            <input type="radio " name="Montage " class="montageSelect Montage6 " autocomplete="off " >&nbsp;&nbsp;Montage 6 
+          </label></li>
+      </ul>
+
+</div>
+    </div>
+    <div class="col-sm-2 " style="padding-left: 0px; " >
+        <div class="dropdown-toggle btn btn-primary "  aria-pressed="false " style="width: 125px;height: 35px; " data-toggle="dropdown "  ><span >Filters </span><span class="caret "></span></div>
+        <ul class="dropdown-menu " style="position: absolute;left: -20px; padding-left: 20px; ">
           <li>
-            <div class="btn btn-primary active" role="button" aria-pressed="true" style="width: 120px;height: 35px;" id="DCbtn"><span class="glyphicon glyphicon-check" id="CDspan"></span>  Remove DC </div>
+            <div class="btn btn-primary active " role="button " aria-pressed="true " style="width: 120px;height: 35px; " id="DCbtn "><span class="glyphicon glyphicon-check " id="CDspan "></span>  Remove DC </div>
           </li>
           <li>
-            <div class="btn btn-primary active" role="button" aria-pressed="false" style="width: 120px;height: 35px;" id="_60Hz"><span class="glyphicon glyphicon-unchecked"  id="60span"></span>  60 Hz  </div>
+            <div class="btn btn-primary active " role="button " aria-pressed="false " style="width: 120px;height: 35px; " id="_60Hz "><span class="glyphicon glyphicon-unchecked "  id="60span "></span>  60 Hz  </div>
           </li>      
           <li>
-            <div class="btn btn-primary active" role="button" aria-pressed="false" style="width: 120px;height: 35px;" id="_50Hz"><span class="glyphicon glyphicon-unchecked"  id="50span"></span>  50 Hz </div>
+            <div class="btn btn-primary active " role="button " aria-pressed="false " style="width: 120px;height: 35px; " id="_50Hz "><span class="glyphicon glyphicon-unchecked "  id="50span "></span>  50 Hz </div>
           </li>
       </ul>
     </div>
   </div>
-  <div class="row" style=" margin-top: 10px;">
-      <div class="col-sm-3" >
-          <div class="row" style="border-radius: 5px; padding-left: 15px;">
-              <div class="col-sm-5" style="background-color: #5cb85c; color:#ffffff ;height: 35px;padding-top: 5px;border-radius: 5px; font-size: 20px; text-align: center;">
+  <div class="row " style=" margin-top: 10px; ">
+      <div class="col-sm-3 " >
+          <div class="row " style="border-radius: 5px; padding-left: 15px; ">
+              <div class="col-sm-5 " style="background-color: #5cb85c; color:#ffffff ;height: 35px;padding-top: 5px;border-radius: 5px; font-size: 20px; text-align: center; ">
                       Date
                 </div>
-                <div class="col-sm-7" style="padding-left: 0px;">
-                <div id="DateTime"  style="background-color: #ffffff; height: 35px;font-size: 20px;width: 120px;padding-top: 7px;padding-left: 5px;margin-left: 0px;border-radius: 5px;">                   
+                <div class="col-sm-7 " style="padding-left: 0px; ">
+                <div id="DateTime "  style="background-color: #ffffff; height: 35px;font-size: 20px;width: 120px;padding-top: 7px;padding-left: 5px;margin-left: 0px;border-radius: 5px; ">                   
                   </div>
               </div>
               </div>
           </div>
-      <div class="col-sm-6" >
-          <div class="row" style=" width: 450px;margin-left: 10px;">
-            <div type="button" class="btn btn-success col-sm-2" id="previous_page" style="width: 50px; margin-left: 1px;" data-toggle="tooltip" data-placement="bottom" title="Previous page"><span class="glyphicon glyphicon-arrow-left"></span> </div>
+      <div class="col-sm-6 " >
+          <div class="row " style=" width: 450px;margin-left: 10px; ">
+            <div type="button " class="btn btn-success col-sm-2 " id="previous_page " style="width: 50px; margin-left: 1px; " data-toggle="tooltip " data-placement="bottom " title="Previous page "><span class="glyphicon glyphicon-arrow-left "></span> </div>
 
-            <div class="col-sm-2" id="startWindowtime" style="width: 100px;height: 35px;background-color: #ffffff; border:2px groove #d3d3;
-            margin-left: 1px; border-radius: 5px;font-size: 20px;padding-left: 10px;padding-top: 5px;" >   </div>
+            <div class="col-sm-2 " id="startWindowtime " style="width: 100px;height: 35px;background-color: #ffffff; border:2px groove #d3d3; margin-left: 1px; border-radius: 5px;font-size: 20px;padding-left: 10px;padding-top: 5px; " >   </div>
 
-            <div type="button" class="btn btn-success col-sm-2" id="previous_sec" style="width: 50px;margin-left: 2px;" data-toggle="tooltip" data-placement="bottom" title="Move one second backward"><span class="glyphicon glyphicon-chevron-left"></span> </div>
+            <div type="button " class="btn btn-success col-sm-2 " id="previous_sec " style="width: 50px;margin-left: 2px; " data-toggle="tooltip " data-placement="bottom " title="Move one second backward "><span class="glyphicon glyphicon-chevron-left "></span> </div>
 
-            <div type="button" class="btn btn-success col-sm-2" id="next_sec" style="width: 50px;margin-left: 10px;" data-toggle="tooltip" data-placement="bottom" title="Move one second forward"><span class="glyphicon glyphicon-chevron-right"></span> </div>
+            <div type="button " class="btn btn-success col-sm-2 " id="next_sec " style="width: 50px;margin-left: 10px; " data-toggle="tooltip " data-placement="bottom " title="Move one second forward "><span class="glyphicon glyphicon-chevron-right "></span> </div>
 
-            <div class="col-sm-2" id="endWindowtime" style="width: 100px;height: 35px;background-color: #ffffff; border:2px groove #d3d3;
-            margin-left: 1px; border-radius: 5px;font-size: 20px;padding-left: 10px;padding-top: 5px" >   </div>
+            <div class="col-sm-2 " id="endWindowtime " style="width: 100px;height: 35px;background-color: #ffffff; border:2px groove #d3d3; margin-left: 1px; border-radius: 5px;font-size: 20px;padding-left: 10px;padding-top: 5px " >   </div>
 
-            <div type="button" class="btn btn-success col-sm-2" id="next_page" style="width: 50px;margin-left: 2px;" data-toggle="tooltip" data-placement="bottom" title="Next page"><span class="glyphicon glyphicon-arrow-right"></span></div>
+            <div type="button " class="btn btn-success col-sm-2 " id="next_page " style="width: 50px;margin-left: 2px; " data-toggle="tooltip " data-placement="bottom " title="Next page "><span class="glyphicon glyphicon-arrow-right "></span></div>
           </div>
       </div>
-      <div class="col-sm-3" >
-<li class="dropdown" style="margin-left: 15px;">
-  <div class="dropdown-toggle btn btn-success" id="windowduratin" style="position: absolute;top: -10px; left: 2px;height: 35px;" data-toggle="dropdown"  ><span >Window Duration: </span><span id="wd">7s </span><span class="caret"></span></div>
-        <ul class="dropdown-menu">
-        <div class="btn-group" data-toggle="buttons">
-          <li><label class="btn btn-success active windowSelect window1s">
-            <input type="radio" name="options" class="window1s" autocomplete="off" >  1s 
+      <div class="col-sm-3 " >
+<li class="dropdown " style="margin-left: 15px; ">
+  <div class="dropdown-toggle btn btn-success " id="windowduratin " style="position: absolute;top: -10px; left: 2px;height: 35px; " data-toggle="dropdown "  ><span >Window Duration: </span><span id="wd ">7s </span><span class="caret "></span></div>
+        <ul class="dropdown-menu ">
+        <div class="btn-group " data-toggle="buttons ">
+          <li><label class="btn btn-success active windowSelect window1s ">
+            <input type="radio " name="options " class="window1s " autocomplete="off " >  1s 
           </label></li>
-          <li><label class="btn btn-success windowSelect window3s">
-            <input type="radio" name="options" class="window3s" autocomplete="off">  3s
+          <li><label class="btn btn-success windowSelect window3s ">
+            <input type="radio " name="options " class="window3s " autocomplete="off ">  3s
           </label></li>
-          <li><label class="btn btn-success windowSelect window7s">
-            <input type="radio" name="options" class="window7s" autocomplete="off" checked>  7s
+          <li><label class="btn btn-success windowSelect window7s ">
+            <input type="radio " name="options " class="window7s " autocomplete="off " checked>  7s
           </label></li>
-          <li><label class="btn btn-success windowSelect window10s">
-            <input type="radio" name="options" class="window10s" autocomplete="off">  10s
+          <li><label class="btn btn-success windowSelect window10s ">
+            <input type="radio " name="options " class="window10s " autocomplete="off ">  10s
           </label></li>
-          <li><label class="btn btn-success windowSelect window15s">
-            <input type="radio" name="options" class="window15s" autocomplete="off"> 15s
+          <li><label class="btn btn-success windowSelect window15s ">
+            <input type="radio " name="options " class="window15s " autocomplete="off "> 15s
           </label></li>
-          <li><label class="btn btn-success windowSelect window30s">
-            <input type="radio" name="options" class="window30s " autocomplete="off"> 30s
+          <li><label class="btn btn-success windowSelect window30s ">
+            <input type="radio " name="options " class="window30s " autocomplete="off "> 30s
           </label></li>
-          <li><label class="btn btn-success windowSelect window60s">
-            <input type="radio" name="options" class="window60s" autocomplete="off"> 60s
+          <li><label class="btn btn-success windowSelect window60s ">
+            <input type="radio " name="options " class="window60s " autocomplete="off "> 60s
           </label></li>
         </div>    
         </ul>
@@ -116,250 +139,414 @@
         </div>
       </div>
   </div>
-<div class="col-sm-2" style="padding: 0px;" >
-    <div class="row" style="margin-top: 10px; padding: 0px; margin-left: 0px;" >
-            <div class="col-sm-6" style="padding-left: 0px;">
-                  <div class="btn btn-primary active" role="button"  style="height: 35px;font-size: 15px;width: 114px;padding-left: 8px; " id="Documentationbtn">Documentation
+<div class="col-sm-2 " style="padding: 0px; " >
+    <div class="row " style="margin-top: 10px; padding: 0px; margin-left: 0px; " >
+            <div class="col-sm-6 " style="padding-left: 0px; ">
+                  <div class="btn btn-primary active " role="button "  style="height: 35px;font-size: 15px;width: 114px;padding-left: 8px; " id="Documentationbtn ">Documentation
                   </div>            
             </div>
-      <div class="col-sm-6" style="padding-left: 7px;">
-                  <div class="btn btn-primary active" role="button"  style="height: 35px;" id="aboutbtn"><span class="glyphicon glyphicon-user" ></span> About</div>
+      <div class="col-sm-6 " style="padding-left: 7px; ">
+                  <div class="btn btn-primary active " role="button "  style="height: 35px; " id="aboutbtn "><span class="glyphicon glyphicon-user " ></span> About</div>
       </div>
     </div>
-    <div class="row" style=" margin-top: 10px;">
-        <div class="col-sm-4" style="padding-left: 0px;">
-          <li class="dropdown" style="margin-left: 15px;  ">
-            <div class="dropdown-toggle btn btn-success" id="amp" style="position: absolute;top: -10px; left: 2px;height: 35px;width: 100px;padding-left: 3px;" data-toggle="dropdown"  ><span >Amp: </span><span id="ampNumber">5 µV </span><span class="caret"></span></div>
-            <ul class="dropdown-menu" style="position: absolute;left: -30px;">
-            <div class="btn-group" data-toggle="buttons">
-              <li style="padding-left: 30px; "><label class="btn btn-success active amplitSelect amp1s" style="width: 100px;">
-                <input type="radio" name="amplitude" class="amp1s" autocomplete="off" >1 µV </label></li>
+    <div class="row " style=" margin-top: 10px; ">
+        <div class="col-sm-4 " style="padding-left: 0px; ">
+          <li class="dropdown " style="margin-left: 15px; ">
+            <div class="dropdown-toggle btn btn-success " id="amp " style="position: absolute;top: -10px; left: 2px;height: 35px;width: 100px;padding-left: 3px; " data-toggle="dropdown "  ><span >Amp: </span><span id="ampNumber ">5 µV </span><span class="caret "></span></div>
+            <ul class="dropdown-menu " style="position: absolute;left: -30px; ">
+            <div class="btn-group " data-toggle="buttons ">
+              <li style="padding-left: 30px; "><label class="btn btn-success active amplitSelect amp1s " style="width: 100px; ">
+                <input type="radio " name="amplitude " class="amp1s " autocomplete="off " >1 µV </label></li>
 
-              <li style="padding-left: 30px; "><label class="btn btn-success active amplitSelect amp2s" style="width: 100px;">
-                <input type="radio" name="amplitude" class="amp2s" autocomplete="off" >2 µV </label></li>
+              <li style="padding-left: 30px; "><label class="btn btn-success active amplitSelect amp2s " style="width: 100px; ">
+                <input type="radio " name="amplitude " class="amp2s " autocomplete="off " >2 µV </label></li>
 
-              <li style="padding-left: 30px;"><label class="btn btn-success active amplitSelect amp3s" style="width: 100px">
-                <input type="radio" name="amplitude" class="amp3s" autocomplete="off" >3 µV </label></li>
+              <li style="padding-left: 30px; "><label class="btn btn-success active amplitSelect amp3s " style="width: 100px ">
+                <input type="radio " name="amplitude " class="amp3s " autocomplete="off " >3 µV </label></li>
 
-              <li style="padding-left: 30px;"><label class="btn btn-success active amplitSelect amp5s" style="width: 100px">
-                <input type="radio" name="amplitude" class="amp5s" autocomplete="off" checked >5 µV </label></li>
+              <li style="padding-left: 30px; "><label class="btn btn-success active amplitSelect amp5s " style="width: 100px ">
+                <input type="radio " name="amplitude " class="amp5s " autocomplete="off " checked >5 µV </label></li>
 
-              <li style="padding-left: 30px;"><label class="btn btn-success active amplitSelect amp7s" style="width: 100px">
-                <input type="radio" name="amplitude" class="amp7s" autocomplete="off" >7 µV </label></li>
+              <li style="padding-left: 30px; "><label class="btn btn-success active amplitSelect amp7s " style="width: 100px ">
+                <input type="radio " name="amplitude " class="amp7s " autocomplete="off " >7 µV </label></li>
 
-              <li style="padding-left: 30px;"><label class="btn btn-success active amplitSelect amp10s" style="width: 100px">
-                <input type="radio" name="amplitude" class="amp10s" autocomplete="off" >10 µV </label></li>
+              <li style="padding-left: 30px; "><label class="btn btn-success active amplitSelect amp10s " style="width: 100px ">
+                <input type="radio " name="amplitude " class="amp10s " autocomplete="off " >10 µV </label></li>
 
-              <li style="padding-left: 30px;"><label class="btn btn-success active amplitSelect amp15s" style="width: 100px">
-                <input type="radio" name="amplitude" class="amp15s" autocomplete="off" >15 µV </label></li>
+              <li style="padding-left: 30px; "><label class="btn btn-success active amplitSelect amp15s " style="width: 100px ">
+                <input type="radio " name="amplitude " class="amp15s " autocomplete="off " >15 µV </label></li>
 
-              <li style="padding-left: 30px;"><label class="btn btn-success active amplitSelect amp20s" style="width: 100px">
-                <input type="radio" name="amplitude" class="amp20s" autocomplete="off" >20 µV </label></li>
+              <li style="padding-left: 30px; "><label class="btn btn-success active amplitSelect amp20s " style="width: 100px ">
+                <input type="radio " name="amplitude " class="amp20s " autocomplete="off " >20 µV </label></li>
 
-              <li style="padding-left: 30px;"><label class="btn btn-success active amplitSelect amp30s" style="width: 100px">
-                <input type="radio" name="amplitude" class="amp30s" autocomplete="off" >30 µV </label></li>
+              <li style="padding-left: 30px; "><label class="btn btn-success active amplitSelect amp30s " style="width: 100px ">
+                <input type="radio " name="amplitude " class="amp30s " autocomplete="off " >30 µV </label></li>
 
-              <li style="padding-left: 30px;"><label class="btn btn-success active amplitSelect amp50s" style="width: 100px">
-                <input type="radio" name="amplitude" class="amp50s" autocomplete="off" >50 µV </label></li>
+              <li style="padding-left: 30px; "><label class="btn btn-success active amplitSelect amp50s " style="width: 100px ">
+                <input type="radio " name="amplitude " class="amp50s " autocomplete="off " >50 µV </label></li>
 
-              <li style="padding-left: 30px;"><label class="btn btn-success active amplitSelect amp100s" style="width: 100px">
-                <input type="radio" name="amplitude" class="amp100s" autocomplete="off" >100 µV </label></li>       
+              <li style="padding-left: 30px; "><label class="btn btn-success active amplitSelect amp100s " style="width: 100px ">
+                <input type="radio " name="amplitude " class="amp100s " autocomplete="off " >100 µV </label></li>       
             </div>    
             </ul>
         </div>
       </li>
-        <div class="col-sm-8" style="padding-left: 0px;"></div>  
+        <div class="col-sm-2 " style="padding-left: 0px; "></div>  
+      <div class="col-sm-5 " style="padding-left: 0px; ">  
+                  <div class="btn btn-success active " role="button "  style="height: 35px;width: 95px; " id="settings_btn "><span class="glyphicon glyphicon-cog " ></span> Settings</div>
+      </div>
     </div>
 </div>
 </div>
 </nav>
 </div>
-<div class="modal fade" id="montageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  data-keyboard="false">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content"  style=" overflow-y: scroll; height: 600px;">
-      <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLabel">Montage</h2>
-      </div>
-      <div class="modal-body" >
-
-        <div class="row" style="font-size: 20px">
-        <div class="col-sm-3" >
-          <div style="text-align: center;" >channels</div>          
-        </div>
-        <div class="col-sm-3" >
-          <div style="text-align: center;" class="channel2Group">channels</div>
-        </div>
-        <div class="col-sm-2">
-          
-        </div>
-        <div class="col-sm-4" >
-          <div style="text-align: center;" >Montage</div>  
-        </div>
-      </div>
-      <hr>
-      <div class="row" >
-        <div class="col-sm-3"  style=" padding-left: 5px;padding-right: ">
-        <div style=" border: groove  1px; padding: 1px; "><ul class="list-unstyled" id="channel_labels_one" "></ul> </div>
-        </div>
-        <div class="col-sm-3"  style="padding-left: 5px;">
-        <div class="channel2Group" style=" border: groove  1px;padding-left: 5px;  "><ul class="list-unstyled " id="channel_labels_two" style="padding: 0px;" ></ul> </div>
-        </div>
-        <div class="col-sm-1" id="montagbtngroup" style=" height: 360px; padding: 0px; " >
-        <div class="sticky-top "  style="position: sticky; top:100px; z-index: 20;width: 100px;padding: 0px; ">
-          <div type="button" class="btn btn-info" style="margin-bottom: 30px;width: 70px;" id="EEGMontage"   data-toggle="tooltip" data-placement="bottom" title="Add selected channels to EEG tab"> EEG   <span class="glyphicon glyphicon-chevron-right"> </span> </div>
-          <div type="button" class="btn btn-success" style="margin-bottom: 30px;width: 70px;" id="EKGMontage" data-toggle="tooltip" data-placement="bottom" title="Add selected channels to EKG tab"> EKG   <span class="glyphicon glyphicon-chevron-right"> </span> </div>
-          <div type="button" class="btn btn-warning" style="margin-bottom: 30px;width: 70px;" id="OtherMontage" data-toggle="tooltip" data-placement="bottom" title="Add selected channel to other tab, you can get the value by move the cursor over the channel">Other<span class="glyphicon glyphicon-chevron-right"> </span> </div>
-          <div type="button" class="btn btn-danger" style=" margin-bottom: 30px;width: 70px;" id="delelteMontage" data-toggle="tooltip" data-placement="bottom" title="remove selected channel from the montage"><span class="glyphicon glyphicon-remove">  </div>            
-          <div class="btn btn-primary active" role="button" aria-pressed="false" style="margin-bottom: 30px;width: 70px;" id="refrential" data-toggle="tooltip" data-placement="bottom" title="allow to select one channel only">
-               <span class="glyphicon glyphicon-unchecked" id="refrentialspan" ></span> Value</div>
-           
-        <div class="btn btn-info" role="button" aria-pressed="false" style="margin-bottom: 30px;width: 70px;" id="invert" data-toggle="tooltip" data-placement="bottom" title="invert the signal of EEG channels only">
-            <span class="glyphicon glyphicon-unchecked" id="invertspan" ></span> Invert</div>
-
-
-           <div type="button" class="btn btn-primary" id="acceptMontage" data-dismiss="modal" style=" margin-bottom: 30px;width: 70px;">Ok  <span class="glyphicon glyphicon-ok"></span></div>
-        </div>
-      </div>
-        <div class="col-sm-5" style="margin-left: 0px; padding-left: 0px; padding-left: 40px;">
-        <div style=" border: groove #5bc0de 1px; margin-top: 10px; padding: 0px;"><ul id="montage_EEG_list" style="padding: 2px;"></ul> </div>
-        <div style=" border: groove #5cb85c 1px; margin-top: 10px;padding: 0px;"><ul id="montage_EKG_list" style="padding: 2px;"></ul> </div>
-        <div style=" border: groove #5cb85c 1px; margin-top: 10px; padding: 0px; "><ul id="montage_other_list" style="padding: 2px;"></ul> </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-     </div>
-    </div>
-    </div>
+<div class=" row plotDivs showAtbegining " id="PlotContainer " style="background-color: #222222; ">
+  <div class="FirstCol plotDivs showAtbegining ">
+    <div class="row plotDivs RowOne "></div>
+    <div class="row plotDivs RowTwo RowTwoPlot annotaionRow "   id="AnnotaionName " style="background-color:#222222; "></div>
+     <div class="row plotDivs RowTwo RowTwoPlot upperTimeRow "   id="UpperTimeMarkName " style="background-color:#222222; "></div>    
+    <div class="row plotDivs RowTwo RowTwoPlot " id="EEGchName " ></div>
+    <div class="row plotDivs RowTwo RowTwoPlot EKGRow " style=" border: 1px solid #5cb85c;width: 1px; background-color: #5cb85c;width: 100%; "></div>
+    <div class="row plotDivs RowTwo RowTwoPlot " id="EKGchName " ></div>
+    <div class="row plotDivs RowTwo RowTwoPlot OtherRow " style=" border: 1px solid #dba436;width: 1px;background-color:#dba436;width: 100%; " ></div>
+    <div class="row plotDivs RowTwo RowTwoPlot " id="OtherchName " ></div>
+    <div class="row plotDivs RowTwo RowTwoPlot lowerTimeMarkRow "   id="LowerTimeMarkName " style="background-color:#222222; "></div> 
   </div>
+
+<div class="SecondCol plotDivs showAtbegining ">
+    <div class="row plotDivs RowOne ">
+      <div class="showAtbegining " id="scroll_body " style="height: 12px;padding-top: 1px;padding-bottom: 1px;background-color: #666666; visibility: hidden; " >
+        <div id="scroll_marker " style="height: 10px; background-color: #d8c8bc; width: 30px; position: absolute;left: 10%; "></div>
+      <input type="range " id="rangeinput " >
+      </div>
+    </div>
+    <div class="row plotDivs RowTwo RowTwoPlot annotaionRow "   id="Annotaionplot " ></div>
+     <div class="row plotDivs RowTwo RowTwoPlot upperTimeRow "   id="UpperTimeMarkplot " ></div> 
+     <div class="row plotDivs RowTwo RowTwoPlot "   id="EEGplot "></div>
+    <div class="row plotDivs RowTwo RowTwoPlot EKGRow " style=" border: 1px solid #5cb85c;width: 1px;background-color: #5cb85c; width: 100%; "></div>
+    <div class="row plotDivs RowTwo RowTwoPlot "   id="EKGplot "></div>
+    <div class="row plotDivs RowTwo RowTwoPlot OtherRow " style=" border: 1px solid #dba436;width: 1px;background-color:#dba436;width: 100%; " ></div>
+    <div class="row plotDivs RowTwo RowTwoPlot "   id="Otherplot "></div>
+    <div class="row plotDivs RowTwo RowTwoPlot lowerTimeMarkRow "   id="LowerTimeMarkplot " ></div> 
 </div>
-<div class="row"  style="margin: 0px;padding: 0px;background-color: #222222; ">
-  <div class="col-sm-2 " style=" margin-right: 0;padding: 0 ;  ">
+<div class="ThirdCol plotDivs " style="border-right: 10px solid #222222;border-bottom: 10px solid #222222;padding-right: 3px;background-color:#222222;visibility: hidden; " >
+  <div class="row plotDivs RowOne " ></div>
+ <div class=" row plotDivs RowTwo " id="annotaion_box " style="background-color:#222222; padding-top: 3px; width: 100% ">
+    <!-- annotaion table start  -->
+
+<!-- annotaion header -->
+<div class="thead-inverse row " style=" background-color: #222222;color: #0275d8; margin: 2px; " >
+    <div id="Annotaion_Table_Head_0 " class="annotaionHeader "  style="width: 250px; "><b>&emsp;Annotaion<br /></b><span class="glyphicon glyphicon glyphicon-sort " ></span></div>
+
+    <div id="Annotaion_Table_Head_1 " class="annotaionHeader "  style="width: 90px; "><b>Clock Time</b><span class="glyphicon glyphicon glyphicon-sort " ></span></div>
 
   </div>
-  <div class="col-sm-10" style="margin-left: 50;padding: 0 ;">
-    <div class="showAtbegining" id="scroll_body" style="height: 12px;padding-top: 1px;padding-bottom: 1px;background-color: #666666; visibility: hidden;"  >
-      <div id="scroll_marker" style="height: 10px; background-color: #d8c8bc; width: 30px; position: absolute;left: 10%;"></div>
-    <input type="range" id="rangeinput">
-    </div>
-  </div>
+<!-- annotaions actual table -->
+<div id="annotaionsTableScrol "  style="overflow:auto; border: 2px solid #222222; padding-right: 5px;overflow-x: hidden; margin-right: 3px; ">
+<table class="sortable table " id="AnnotaionTable " style="margin: 0px; ">
+
+</table>
 </div>
 
-<div class="row showAtbegining" style="margin: 0px;padding: 0px;visibility: hidden;">
-  <div class="col-sm-2 " style=" margin-right: 0;padding: 0 ;">
-    <div id="EEGchName" ></div>
-  </div>
-  <div class="col-sm-10" id="EEGplot" style="margin-left: 0;padding: 0 ; ">    
-  </div>
-</div>
-<div class="row showAtbegining" style="margin: 0px;padding: 0px; border-top: solid #5cb85c 1px;visibility: hidden;">
-  <div class="col-sm-2 " id="EKGchholder" style=" margin-right: 0;padding: 0 ; ">
-    <div id="EKGchName" ></div>
-  </div>
-  <div class="col-sm-10" id="EKGplot" style="margin-left: 0;padding: 0 ; ">
+<!-- annotaion search -->
+
+<div class="row " style="margin: 0px; background-color: #222222; ">
+<input type="text " id="SearchInput " name="search " onkeyup ="SearchAnnotaion() "  placeholder="Search.. " style="padding-left: 5px; background-color: #222222;color: #0275d8;border-width: 0px; " autocomplete="off "></div>       
+    <!-- annotaion table end  -->
   </div>
 </div>
-<div class="row showAtbegining" style="margin: 0px;padding: 0px; border-top: solid #f0ad4e 1px;visibility: hidden;">
-  <div class="col-sm-2 " style=" margin-right: 0;padding: 0 ; ">
-    <div id="OtherchName" ></div>
-  </div>
-  <div class="col-sm-10" id="Otherplot" style="margin-left: 50;padding: 0 ;">
-  </div>
 </div>
-<div class="modal fade" id="aboutmodal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title">About</h2>
-      </div>
-      <div class="modal-body">
-        <h3> This work was created by<strong> Bilal Zonjy, MD</strong></h3>
-        <br>
-        <div class="row ">
-        <div class="col-sm-6"><h4> Email: bxz142@case.edu </h4></div>
-        <div class="col-sm-6" style="padding-top: 10px;">
-        <a rel="github"  href="https://github.com/BilalZonjy/EDFViewer"><img alt="github" style="border-width:0 height:40px;width: 60px; " src="assets/img/GitHub.png"/></a>
-    </div>
+<div class="modal fade " id="loadAnnotationModule " tabindex="-1 " role="dialog " aria-labelledby="myModalLabel " aria-hidden="true " style="display: none; "  data-backdrop="static " data-keyboard="false ">
+    <div class="modal-dialog ">
+      <div class="modal-content " style="height: 100px;width: 400px;padding: 20px; ">
+        <div class="span4 ">
+          Loading Annotaions 
+          <div class="progress ">
+              <div id="loadingProgressBar " class="progress-bar " style="width: 0%; ">
+              </div>
+          </div>
         </div>
-        <br>
-        <div style="font-size: 120%;">Special thanks to:<br><span style="padding-left: 5px;">James McDonald PhD candidate.</span> <br><span style="padding-left: 5px;">Farhad Kaffashi PhD.</span><br><span style="padding-left: 5px;">Wanchat Theeranaew PhD.</span>
-        </div>
-        <br>
-    <div class="row"> 
-      <div class="col-sm-2" style="padding-top: 3px;"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="assets/img/creativecommons.png"/></a>
-      </div>
-      <div class="col-sm-10" > This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>
       </div>
     </div>
-      <div class="modal-footer">
-        <div type="button" class="btn btn-primary" data-dismiss="modal">Close</div>
+  </div>
+<div class="modal fade " id="SettingsModal " >
+  <div class="modal-dialog " role="document ">
+    <div class="modal-content ">
+      <div class="modal-header ">
+        <h2 class="modal-title ">Settings</h2>
+      </div>
+      <div class="modal-body " style="padding-top: 10px; ">
+ <div class="row settingRow " style="margin-top: 25px; "> 
+ <div class="col-sm-1 "></div>
+ <div class="col-sm-10 ">
+   <div class="settingsEdge " style="height: 80px; " >
+    <div class="settingsEdgeLegand " style="width: 210px; ">Channel Name Width </div>
+    <div class="input-group " style=" position: relative;left: 100px; padding: 0px; " >
+              <div style="float: left;width: 35px; " type="button " class="btn btn-success btn-number " id="setting_CNW_decrease ">
+                <span class="glyphicon glyphicon-minus "></span>
+              </div>
+          <div style="height: 35px;background-color: #ffffff; border:2px groove #d3d3;padding: 0px;float: left;width: 150px; ">
+            <div style="width: 30px;height: 31px; background-color:#686868; position: relative;left: 0px; " id="setting_CNW_slider "></div>
+          </div>
+              <div style="float: left;width: 35px; " type="button " class="btn btn-success btn-number " id="setting_CNW_increase " >
+                  <span class="glyphicon glyphicon-plus "></span>
+              </div>
+      </div>
+   </div>      
+ </div>  
+ <div class="col-sm-1 "></div>        
+</div>
+ <div class="row settingRow " style="margin-top: 30px; "> 
+ <div class="col-sm-1 "></div>
+ <div class="col-sm-5 ">
+   <div class="settingsEdge "  >
+    <div class="settingsEdgeLegand " style="width: 170px;left:15px; ">Annotaion Table </div>
+              <label class="btn btn-success active AnnotationTblSelect SATob1 " style="width: 200px;margin-bottom: 10px;text-align: left;margin-left: 7px; ">
+                <input type="radio " name="settingAnnotaionTable " class="SATob1 " autocomplete="off " > Hide </label>
+
+              <label class="btn btn-success active AnnotationTblSelect SATob2 " style="width: 200px;margin-bottom: 10px;text-align: left;margin-left: 7px; ">
+                <input type="radio " name="settingAnnotaionTable " class="SATob2 " autocomplete="off " checked> Show only for EDFplus </label>
+
+              <label class="btn btn-success active AnnotationTblSelect SATob3 " style="width: 200px;margin-bottom: 10px;text-align: left;margin-left: 7px; ">
+                <input type="radio " name="settingAnnotaionTable " class="SATob3 " autocomplete="off " > Show always </label>
+   </div>      
+ </div>  
+ <div class="col-sm-5 ">
+   <div class="settingsEdge "  style="height: 166px; "> 
+<div type="button " class="btn btn-danger " style="margin-top: 30px;margin-bottom: 10px;text-align: left;margin-left: 7px;width: 185px; " id="ResetToDefault " onclick="Reseteverything() "> Reset to default </div>
+</div>
+ </div>  
+ <div class="col-sm-1 "></div>       
+</div>
+    </div>
+      <div class="modal-footer ">
+        <div type="button " class="btn btn-primary " id="Savesetting "  style="margin: 10px; " onclick="saveSettings() ">Save Setting <span class=" glyphicon glyphicon-save "></span></div>
+        <div type="button " class="btn btn-primary " data-dismiss="modal ">Close</div>
       </div>
     </div>
   </div>
 </div>
 </div>
-<div class="modal fade" id="jumptomodal" >
-  <div class="modal-dialog" role="document" style="width: 400px;">
-    <div class="modal-content" >
-      <div class="modal-header"><h3>Jump to</h3>
+<div class="modal fade " id="montageModal " tabindex="-1 " role="dialog " aria-labelledby="MontageModalLabel " aria-hidden="true "  data-keyboard="false ">
+  <div class="modal-dialog " role="document ">
+    <div class="modal-content "  style=" overflow-y: hidden; overflow-x: hidden; height: 560px;width: 685px; ">
+      <div class="modal-header " style="height: 60px; ">
+        <h2 class="modal-title " id="MontageModalLabel " ">Montage</h2>
+
+                                    </div>
+                                    <div class="modal-body" style="height: 460px; padding-top: 5px;">
+                                        <div class="row" style="height: 25px;">
+                                            <div class="col-sm-2">
+                                                <div style="text-align: center; margin-left: 20px; margin-top: 7px;font-size: 20px;">Channels</div>
+                                            </div>
+                                            <div class="col-sm-1"></div>
+                                            <div class="col-sm-2">
+                                                <div style="text-align: center;margin-left: 10px; margin-top: 7px;font-size: 20px;" class="channel2Group">Channels</div>
+                                            </div>
+
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-3 " style="padding: 0px;">
+
+                                                <div class="dropdown" style="margin-left: 15px;">
+                                                    <button style="width: 150px;font-size: 20px;" class="btn btn-default dropdown-toggle" type="button" id="montage_modal_editor" data-toggle="dropdown"> <span id="montage_modal_txt">Montage 1</span>
+                                                        <span class="caret"></span></button>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1" style="position: absolute;left: -5px;">
+                                                        <li role="presentation">
+                                                            <div style="width: 160px;cursor:pointer;text-align: center;" class="montage_modal_list  Montage1"> Montage 1
+                                                            </div>
+                                                        </li>
+                                                        <li role="presentation">
+                                                            <div style="width: 160px;cursor:pointer;text-align: center;" class="montage_modal_list  Montage2"> Montage 2
+                                                            </div>
+                                                        </li>
+                                                        <li role="presentation">
+                                                            <div style="width: 160px;cursor:pointer;text-align: center;" class="montage_modal_list  Montage3"> Montage 3
+                                                            </div>
+                                                        </li>
+                                                        <li role="presentation">
+                                                            <div style="width: 160px;cursor:pointer;text-align: center;" class="montage_modal_list  Montage4"> Montage 4
+                                                            </div>
+                                                        </li>
+                                                        <li role="presentation">
+                                                            <div style="width: 160px;cursor:pointer;text-align: center;" class="montage_modal_list  Montage5"> Montage 5
+                                                            </div>
+                                                        </li>
+                                                        <li role="presentation">
+                                                            <div style="width: 160px;cursor:pointer;text-align: center;" class="montage_modal_list  Montage6"> Montage 6
+                                                            </div>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div style="padding: 0px; margin: 0px; width: 155px; float: left;">
+                                                <div style=" border: groove  1px;overflow-y: auto;overflow-x: hidden; height: 360px; margin-left: 8px;margin-right: 8px;">
+                                                    <ul class="list-unstyled" id="channel_labels_one"></ul>
+                                                </div>
+                                            </div>
+                                            <div style="padding: 0px; margin: 0px;width: 155px; float: left;">
+                                                <div class="channel2Group" style=" border: groove  1px;overflow-y: auto;overflow-x: hidden;height: 360px;margin-left: 8px;margin-right: 8px;">
+                                                    <ul class="list-unstyled " id="channel_labels_two" style="padding: 0px;"></ul>
+                                                </div>
+                                            </div>
+                                            <div id="montagbtngroup" style=" height: 360px; padding: 0px;width: 70px; float: left;margin: 0px; ">
+                                                <div class="sticky-top " style="position: sticky; top:100px; z-index: 20;width: 70px;padding: 0px; ">
+                                                    <div type="button" class="btn btn-info" style="margin-bottom: 30px;width: 70px;" id="EEGMontage" data-toggle="tooltip" data-placement="bottom" title="Add selected channels to EEG tab"> EEG <span class="glyphicon glyphicon-chevron-right"> </span> </div>
+                                                    <div type="button" class="btn btn-success" style="margin-bottom: 30px;width: 70px;" id="EKGMontage" data-toggle="tooltip" data-placement="bottom" title="Add selected channels to EKG tab"> EKG <span class="glyphicon glyphicon-chevron-right"> </span> </div>
+                                                    <div type="button" class="btn btn-warning" style="margin-bottom: 75px;width: 70px;" id="OtherMontage" data-toggle="tooltip" data-placement="bottom" title="Add selected channel to other tab, you can get the value by move the cursor over the channel">Other<span class="glyphicon glyphicon-chevron-right"> </span> </div>
+
+                                                    <div class="btn btn-primary active" role="button" aria-pressed="false" style="margin-bottom: 30px;width: 70px;" id="refrential" data-toggle="tooltip" data-placement="bottom" title="allow to select one channel only">
+                                                        <span class="glyphicon glyphicon-unchecked" id="refrentialspan"></span> Value</div>
+
+                                                    <div class="btn btn-info" role="button" aria-pressed="false" style="margin-bottom: 30px;width: 70px;" id="invert" data-toggle="tooltip" data-placement="bottom" title="invert the signal of EEG channels only">
+                                                        <span class="glyphicon glyphicon-unchecked" id="invertspan"></span> Invert</div>
+
+                                                </div>
+                                            </div>
+                                            <div style="margin-left: 0px; padding-left: 0px; padding-left: 5px;padding-right: 5px; height: 360px;width: 225px; float: left;;overflow-y: auto;overflow-x: hidden;">
+                                                <div style=" border: groove #5bc0de 1px;  padding: 0px;">
+                                                    <ul class="montageSelectedList" id="montage_EEG_list" style="padding: 2px;margin: 0px"></ul>
+                                                </div>
+                                                <div style=" border: groove #5cb85c 1px; margin-top: 10px;padding: 0px;">
+                                                    <ul class="montageSelectedList" id="montage_EKG_list" style="padding: 2px;margin: 0px;"></ul>
+                                                </div>
+                                                <div style=" border: groove #dba436 1px; margin-top: 10px; padding: 0px; ">
+                                                    <ul class="montageSelectedList" id="montage_other_list" style="padding: 2px;margin: 0px;"></ul>
+                                                </div>
+                                            </div>
+
+                                            <div id="montagbtngroup" style=" height: 360px; padding: 0px;width: 70px; float: left;margin: 0px; ">
+                                                <div class="sticky-top " style="position: sticky; top:100px; z-index: 20;width: 70px;padding: 0px; ">
+
+                                                    <div type="button" class="btn btn-info montageMoveBtn montageEditBtn" style="margin-top: 70px; margin-bottom: 30px;width: 70px;visibility: hidden;" id="UpMontage" data-toggle="tooltip" data-placement="bottom" title="Move selected channel one level up the montage segment"><span class="glyphicon glyphicon-chevron-up">  </div>
+
+          <div type="button" class="btn btn-danger montageEditBtn" style=" margin-bottom: 30px;width: 70px;visibility: hidden;" id="delelteMontage" data-toggle="tooltip" data-placement="bottom" title="remove selected channel from the montage"><span class="glyphicon glyphicon-remove">  </div>
+
+          <div type="button" class="btn btn-info montageMoveBtn montageEditBtn" style=" margin-bottom: 30px;width: 70px;visibility: hidden;" id="DownMontage" data-toggle="tooltip" data-placement="bottom" title="Move selected channel one level down the montage segment"><span class="glyphicon glyphicon-chevron-down">  </div>
+
+        </div>
       </div>
-      <div class="modal-body">
-             <div class="panel with-nav-tabs panel-success">
-                <div class="panel-heading">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#ClockTimeTab" data-toggle="tab" id="ClockTimeli"><span> Clock Time</span></a></li>
-                        <li><a href="#ElapsTimeHHmmssTab" data-toggle="tab" id="ElapsTimeli"><span>Elaps Time<br>(HH:mm:ss)</span></a></li>
-                        <li><a href="#ElapsTimesecondsTab" data-toggle="tab" id="Elapssecondsli"><span>Elaps Time<br>(seconds)</span></a></li>
-                    </ul>
-                </div>
-                <div class="panel-body">
-                    <div class="tab-content">
-                        <div class="tab-pane fade in active" id="ClockTimeTab">
-                           <div class="row" style="width: 365px;padding-left: 14px;">
-                           <div class="col-sm-6" style="margin: 0px; padding:0px; padding-left: 1px;" >
-                          <div style="border:2px solid #c3c3c3 ; padding: 0px;margin: 0px; width: 142px; border-radius: 5px;padding-left: 2px;" >
-                          <input type="number" pattern="[0-9]*" placeholder="HH" step="1"  min="0" max="23" style=" width: 2em; width: 35PX; height: 36px;border: 0px;text-align: right;" id="HH_Clock" class="HH">                       
+
+      </div>
+      <div class="modal-footer" style="height: 40px; padding: 0px;">
+
+                   <div type="button" class="btn btn-primary" id="LoadMontages"  style="margin: 10px;" onclick="loadoMntages()">Load all montages  <span class="glyphicon glyphicon-open"></span></div>
+
+                                                    <div type="button" class="btn btn-primary" id="SaveMontages" style="margin: 10px;" onclick="saveMontages()">Save all montages <span class="  glyphicon glyphicon-save"></span></div>
+
+                                                    <div type="button" class="btn btn-primary" id="acceptMontage" data-dismiss="modal" style=" margin: 10px;width: 70px;">Ok <span class="glyphicon glyphicon-ok"></span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="aboutmodal">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h2 class="modal-title">About</h2>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h3> EDF Viewer version 2</h3>
+                                                <h5> <a href="../EDFViewer_V1/EDFViewer_V1.html">version 1 is available here</a></h5>
+                                                <h3> This work was created by<strong> Bilal Zonjy, MD</strong></h3>
+                                                <br>
+                                                <div class="row ">
+                                                    <div class="col-sm-6">
+                                                        <h4> Email: bxz142@case.edu </h4></div>
+                                                    <div class="col-sm-6" style="padding-top: 10px;">
+                                                        <a rel="github" href="https://github.com/BilalZonjy/EDFViewer"><img alt="github" style="border-width:0 height:40px;width: 60px; " src="assets/img/GitHub.png" /></a>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div style="font-size: 120%;">Special thanks to:
+                                                    <br><span style="padding-left: 5px;">James McDonald PhD candidate.</span>
+                                                    <br><span style="padding-left: 5px;">Farhad Kaffashi PhD.</span>
+                                                    <br><span style="padding-left: 5px;">Wanchat Theeranaew PhD.</span>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-sm-2" style="padding-top: 3px;">
+                                                        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="assets/img/creativecommons.png" /></a>
+                                                    </div>
+                                                    <div class="col-sm-10"> This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <div type="button" class="btn btn-primary" data-dismiss="modal">Close</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="jumptomodal">
+                                    <div class="modal-dialog" role="document" style="width: 400px;">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3>Jump to</h3>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="panel with-nav-tabs panel-success">
+                                                    <div class="panel-heading">
+                                                        <ul class="nav nav-tabs">
+                                                            <li class="active"><a href="#ClockTimeTab" data-toggle="tab" id="ClockTimeli"><span> Clock Time</span></a></li>
+                                                            <li><a href="#ElapsTimeHHmmssTab" data-toggle="tab" id="ElapsTimeli"><span>Elaps Time<br>(HH:mm:ss)</span></a></li>
+                                                            <li><a href="#ElapsTimesecondsTab" data-toggle="tab" id="Elapssecondsli"><span>Elaps Time<br>(seconds)</span></a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="tab-content">
+                                                            <div class="tab-pane fade in active" id="ClockTimeTab">
+                                                                <div class="row" style="width: 365px;padding-left: 14px;">
+                                                                    <div class="col-sm-6" style="margin: 0px; padding:0px; padding-left: 1px;">
+                                                                        <div style="border:2px solid #c3c3c3 ; padding: 0px;margin: 0px; width: 142px; border-radius: 5px;padding-left: 2px;">
+                                                                            <input type="number" pattern="[0-9]*" placeholder="HH" step="1" min="0" max="23" style=" width: 2em; width: 35PX; height: 36px;border: 0px;text-align: right;" id="HH_Clock" class="HH"> :
+                                                                            <input type="number" pattern="[0-9]*" placeholder="mm" step="1" min="0" max="59" style=" width: 2em; width: 40PX;height: 36px;border: 0px;text-align: right;" id="mm_Clock" class="60"> :
+                                                                            <input type="number" pattern="[0-9]*" placeholder="ss" step="1" min="0" max="59" style=" width: 2em; width: 35PX;height: 36px;border: 0px;text-align: right;" id="ss_Clock" class="60">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-6" style="margin-left: 0px;padding-left: 0px;">
+                                                                        <input class="form-control" name="registration_date" id="date_Clock" type="date" style="height: 40px;border:2px solid #c3c3c3 ;">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="tab-pane fade" id="ElapsTimeHHmmssTab">
+                                                                <div class="row" style="width: 365px;padding-left: 15px;" ">
+                           <div class="col-sm-6 " style="margin: 0px; padding:0px; padding-left: 1px; " >
+                          <div style="border:2px solid #c3c3c3 ; padding: 0px;margin: 0px; width: 142px; border-radius: 5px;padding-left: 2px; " >
+                          <input type="number "  placeholder="HH " step="1 "  min="0 " max="23 " style=" width: 2em; width: 35PX; height: 36px;border: 0px; text-align: right; " id="HH_Elaps " pattern="[0-9]* ">                       
                           :
-                           <input type="number" pattern="[0-9]*" placeholder="mm" step="1"  min="0" max="59" style=" width: 2em; width: 40PX;height: 36px;border: 0px;text-align: right;" id="mm_Clock" class="60">                       
+                           <input type="number " pattern="[0-9]* "  placeholder="mm " step="1 "  min="0 " max="59 " style=" width: 2em; width: 40PX;height: 36px;border: 0px;text-align: right; " id="mm_Elaps " class="60 ">                       
                           :
-                           <input type="number" pattern="[0-9]*" placeholder="ss" step="1"  min="0" max="59" style=" width: 2em; width: 35PX;height: 36px;border: 0px;text-align: right;" id="ss_Clock" class="60">
+                           <input type="number " pattern="[0-9]* "  placeholder="ss " step="1 "  min="0 " max="59 " style=" width: 2em; width: 35PX;height: 36px;border: 0px;text-align: right; " id="ss_Elaps " class="60 ">
                            </div>                       
                            </div>
-                             <div class="col-sm-6"  style="margin-left: 0px;padding-left: 0px;">
-                           <input class="form-control" name="registration_date" id="date_Clock" type="date" style="height: 40px;border:2px solid #c3c3c3 ;">
-                           </div>  
-                          </div>
-                      </div>
-                      <div class="tab-pane fade" id="ElapsTimeHHmmssTab">
-                           <div class="row" style="width: 365px;padding-left: 15px;"">
-                           <div class="col-sm-6" style="margin: 0px; padding:0px; padding-left: 1px;" >
-                          <div style="border:2px solid #c3c3c3 ; padding: 0px;margin: 0px; width: 142px; border-radius: 5px;padding-left: 2px;" >
-                          <input type="number"  placeholder="HH" step="1"  min="0" max="23" style=" width: 2em; width: 35PX; height: 36px;border: 0px; text-align: right; " id="HH_Elaps" pattern="[0-9]*">                       
-                          :
-                           <input type="number" pattern="[0-9]*"  placeholder="mm" step="1"  min="0" max="59" style=" width: 2em; width: 40PX;height: 36px;border: 0px;text-align: right;" id="mm_Elaps" class="60">                       
-                          :
-                           <input type="number" pattern="[0-9]*"  placeholder="ss" step="1"  min="0" max="59" style=" width: 2em; width: 35PX;height: 36px;border: 0px;text-align: right;" id="ss_Elaps" class="60">
-                           </div>                       
-                           </div>
-                            <div class="col-sm-6" style="margin-left: 0px;padding-left: 0px;" >
+                            <div class="col-sm-6 " style="margin-left: 0px;padding-left: 0px; " >
                            </div>
                           </div>
                         </div>
-                      <div class="tab-pane fade" id="ElapsTimesecondsTab">
-                        <div class="row" style="width: 365px;padding-left: 15px;">
-                           <div class="col-sm-6" style="margin: 0px; padding:0px; padding-left: 1px;" >
-                            <div style="border:2px solid #c3c3c3 ; padding: 0px;margin: 0px; width: 142px; border-radius: 5px;">
-                           <input type="number" placeholder="seconds" step="1"  min="0" max="3600" style="width: 130px; height: 36px;border: 0px;text-align:right;" id="seconds_Elaps" class="seconds">
+                      <div class="tab-pane fade " id="ElapsTimesecondsTab ">
+                        <div class="row " style="width: 365px;padding-left: 15px; ">
+                           <div class="col-sm-6 " style="margin: 0px; padding:0px; padding-left: 1px; " >
+                            <div style="border:2px solid #c3c3c3 ; padding: 0px;margin: 0px; width: 142px; border-radius: 5px; ">
+                           <input type="number " placeholder="seconds " step="1 "  min="0 " max="3600 " style="width: 130px; height: 36px;border: 0px;text-align:right; " id="seconds_Elaps " class="seconds ">
                            </div>                       
                           </div>
-                          <div class="col-sm-6" style="margin-left: 0px;padding-left: 0px;" >
+                          <div class="col-sm-6 " style="margin-left: 0px;padding-left: 0px; " >
                            </div>
                           </div> 
                         </div>
                     </div>
                 </div>
             </div>       
-        <div type="button" class="btn btn-primary"  id="GO" style="position: relative; left:30px;width: 100px;"> Go To </div>
-        <div type="button" class="btn btn-primary" data-dismiss="modal"  style="position: relative; left:30%;width: 100px;"> Close </div>        
+        <div type="button " class="btn btn-primary "  id="GO " style="position: relative; left:30px;width: 100px; "> Go To </div>
+        <div type="button " class="btn btn-primary " data-dismiss="modal "  style="position: relative; left:30%;width: 100px; "> Close </div>        
     </div>
     </div>
   </div>
@@ -368,11 +555,12 @@
 </div>
 </div>
 </div>
-<script type="text/javascript"  src="assets/js/jquery.js"></script>
-<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-<script type="text/javascript" src='assets/js/moment.min.js'></script>
-<script type="text/javascript" src="assets/js/plotly.min.js"></script>
-<script type="text/javascript" src="assets/js/CaseEEGFilter.js"></script>
-<script type="text/javascript" src="assets/js/app.js"></script>
+<script type="text/javascript "  src="assets/js/jquery.js "></script>
+<script type="text/javascript " src="assets/js/bootstrap.min.js "></script>
+<script type="text/javascript " src='assets/js/moment.min.js'></script>
+<script type="text/javascript " src="assets/js/plotly.min.js "></script>
+<script type="text/javascript " src="assets/js/CaseEEGFilter.js "></script>
+<script type="text/javascript " src="assets/js/app.js "></script>
+
 </body>
 </html>

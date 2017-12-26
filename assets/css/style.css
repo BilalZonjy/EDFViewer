@@ -1,61 +1,67 @@
-.btn-bs-file{
-    position:relative;
+.btn-bs-file {
+    position: relative;
 }
-.btn-bs-file input[type="file"]{
+
+.btn-bs-file input[type="file"] {
     position: absolute;
     top: -9999999;
     filter: alpha(opacity=0);
     opacity: 0;
-    width:0;
-    height:0;
+    width: 0;
+    height: 0;
     outline: none;
     cursor: inherit;
 }
 
-li{
-
-	margin-top: 10px;
+li {
+    margin-top: 10px;
 }
 
-.windowSelect{
-  width: 120px;
-  margin-left: 20px;
-  padding-left: 40px;
+.windowSelect {
+    width: 120px;
+    margin-left: 20px;
+    padding-left: 40px;
 }
 
 .with-nav-tabs.panel-success .nav-tabs > li > a,
 .with-nav-tabs.panel-success .nav-tabs > li > a:hover,
 .with-nav-tabs.panel-success .nav-tabs > li > a:focus {
-  color: #3c763d;
+    color: #3c763d;
 }
+
 .with-nav-tabs.panel-success .nav-tabs > .open > a,
 .with-nav-tabs.panel-success .nav-tabs > .open > a:hover,
 .with-nav-tabs.panel-success .nav-tabs > .open > a:focus,
 .with-nav-tabs.panel-success .nav-tabs > li > a:hover,
 .with-nav-tabs.panel-success .nav-tabs > li > a:focus {
-  color: #3c763d;
-  background-color: #d6e9c6;
-  border-color: transparent;
+    color: #3c763d;
+    background-color: #d6e9c6;
+    border-color: transparent;
 }
+
 .with-nav-tabs.panel-success .nav-tabs > li.active > a,
 .with-nav-tabs.panel-success .nav-tabs > li.active > a:hover,
 .with-nav-tabs.panel-success .nav-tabs > li.active > a:focus {
-  color: #3c763d;
-  background-color: #fff;
-  border-color: #d6e9c6;
-  border-bottom-color: transparent;
+    color: #3c763d;
+    background-color: #fff;
+    border-color: #d6e9c6;
+    border-bottom-color: transparent;
 }
+
 .with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu {
     background-color: #dff0d8;
     border-color: #d6e9c6;
 }
+
 .with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > li > a {
-    color: #3c763d;   
+    color: #3c763d;
 }
+
 .with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > li > a:hover,
 .with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > li > a:focus {
     background-color: #d6e9c6;
 }
+
 .with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > .active > a,
 .with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > .active > a:hover,
 .with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > .active > a:focus {
@@ -63,17 +69,177 @@ li{
     background-color: #3c763d;
 }
 
-
-body{
-   min-width:1300px; 
-   _width: expression( document.body.clientWidth > 1000 ? "1000px" : "auto" ); 
+body {
+    min-width: 1300px;
+    _width: expression( document.body.clientWidth > 1300 ? "1300px": "auto");
+    min-height: 700px;
 }
 
+body,
+html {
+    overflow: hidden;
+}
 
-
-#rangeinput{
+#rangeinput {
     filter: alpha(opacity=0);
     opacity: 0;
     outline: none;
     cursor: inherit;
+}
+
+.plotDivs {
+    margin: 0px;
+    padding: 0px;
+}
+
+.FirstCol,
+.SecondCol,
+.ThirdCol {
+    float: left;
+    position: absolute;
+}
+
+.FirstCol {
+    border-right: 1px solid #222222;
+    width: 200px;
+    left: 0px;
+}
+
+.SecondCol {
+    border-right: 1px solid #222222;
+    width: 800px;
+    left: 200px;
+}
+
+.ThirdCol {
+    /*border-left: 1px solid #222222;*/
+    width: 363;
+    left: 1000px;
+    /*  height: 500px;
+*/
+    overflow: hidden;
+}
+
+.RowBreak {
+    height: 1px;
+    border: 1px solid #222222;
+}
+
+.RowOne {
+    height: 12px;
+    background-color: #222222;
+}
+
+
+/*annotaion table styling*/
+
+#SearchInput {
+    background-position: 10px 10px;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #222222;
+    margin-bottom: 12px;
+}
+
+#AnnotaionTable {
+    border-collapse: collapse;
+    width: 342px;
+    border: 1px solid #ddd;
+    font-size: 18px;
+}
+
+.annotation_row {
+    border-bottom: 1px solid #222222;
+    background-color: #ffffff;
+}
+
+#SearchInput {
+    width: 130px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+
+/* When the input field gets focus, change its width to 100% */
+
+#SearchInput:focus {
+    width: 100%;
+}
+
+#annotaionsTableScrol::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #222222;
+}
+
+#annotaionsTableScrol::-webkit-scrollbar {
+    width: 12px;
+    background-color: #222222;
+}
+
+#annotaionsTableScrol::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px #222222;
+    background-color: #555;
+}
+
+td {
+    border: 1px solid #222222;
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+}
+
+.annotaionHeader {
+    font-size: 16px;
+    text-align: center;
+    float: left;
+    border: 1px solid #d8c8bc;
+}
+
+.showAtbegining {
+    visibility: hidden;
+}
+
+.montageWindowName .montageall {
+    font-size: 12px;
+}
+
+.montageSelectedList {
+    min-height: 30px;
+}
+
+.OthersDeactivate {
+    background-image: repeating-linear-gradient(45deg, #dba436, #dba436 10px, #dbdbdb 10px, #dbdbdb 20px);
+}
+
+.EEGDeactivate {
+    background-image: repeating-linear-gradient(45deg, #5bc0de, #5bc0de 10px, #dbdbdb 10px, #dbdbdb 20px);
+}
+
+.EKGDeactivate {
+    background-image: repeating-linear-gradient(45deg, #5cb85c, #5cb85c 10px, #dbdbdb 10px, #dbdbdb 20px);
+}
+
+.OtherSpan {
+    padding: 0px;
+    margin: 0px;
+    white-space: pre-line;
+    line-height: 0.865;
+}
+
+.settingsEdge {
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border: 3px solid #E0DDD7;
+}
+
+.settingsEdgeLegand {
+    position: relative;
+    top: -16px;
+    left: 50px;
+    background-color: #ffffff;
+    padding-left: 10px;
+    font-size: 20px;
 }
