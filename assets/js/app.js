@@ -77,8 +77,8 @@ var montage = {
     },
 };
 var settings = {
-    'channelWidth': 200,
-    'AlwaysShowAnnotaionsTable': 0,
+    'channelWidth': 150,
+    'AlwaysShowAnnotaionsTable': 1,
     'EDFplusAnnotaionsTable': 1,
 };
 $('#aboutbtn').click(function() {
@@ -91,11 +91,7 @@ $('#Documentationbtn').click(function() {
 function sizeChanged(argument) {
     if (edf.fileName) {
         $("#montage").data('plotMontage', 1);
-        if (edf['Annotations'].read_annotaion == 1) {
-            plot_table_width_rearrange(1);
-        } else {
-            plot_table_width_rearrange(0);
-        }
+        plot_table_width_rearrange();
         readEEG();
     }
 }
@@ -275,6 +271,10 @@ function jumpto_modal_go_activate() {
     }
 }
 
+$('#jumptomodal').on('hidden.bs.modal', function() {
+    edf.jumptomodal = 0;
+})
+
 $(document).on('input', '#rangeinput', function() {
     $('#rangeinput').blur();
     var change = Math.abs(edf.t_beg - parseInt($(this).val()));
@@ -378,22 +378,22 @@ document.onkeydown = function(e) {
                 jumpto_modal_go_activate();
             }
 
-        } else if (key == 49) {
+        } else if (key == 49 && edf.jumptomodal != 1) {
             // montage 1
             change_montage_through_num('1');
-        } else if (key == 50) {
+        } else if (key == 50 && edf.jumptomodal != 1) {
             // montage 2
             change_montage_through_num('2');
-        } else if (key == 51) {
+        } else if (key == 51 && edf.jumptomodal != 1) {
             // montage 3
             change_montage_through_num('3');
-        } else if (key == 52) {
+        } else if (key == 52 && edf.jumptomodal != 1) {
             // montage 4
             change_montage_through_num('4');
-        } else if (key == 53) {
+        } else if (key == 53 && edf.jumptomodal != 1) {
             // montage 5
             change_montage_through_num('5');
-        } else if (key == 54) {
+        } else if (key == 54 && edf.jumptomodal != 1) {
             // montage 6
             change_montage_through_num('6');
         }
@@ -682,7 +682,7 @@ function analysis_header(e) {
     $('.FirstCol').css('borderRightWidth', 0);
     $('.SecondCol').css('borderRightWidth', 0);
     $("#montage").data('plotMontage', 1);
-    $('#SearchInput').html('');
+    $('#SearchInput').val('');
 
     read_Header()
         .then(Analysis_Header_First_Section)
@@ -908,7 +908,7 @@ function Analysis_Header_Second_Section(data) {
             ht = $('#montagbtngroup').height();
             $('#montagbtngroup').css('height', ht - 40);
             loadoSettings();
-            plot_table_width_rearrange(0);
+            plot_table_width_rearrange();
             $('#scroll_marker').css('left', '0');
             resolve(ch_dic);
         };
@@ -1006,7 +1006,7 @@ function ReadSegmentAnnotatons() {
 
 function AnalysisAnnotatons() {
     sortAnnotaionTable(1, 'asc');
-    plot_table_width_rearrange(1);
+    plot_table_width_rearrange();
     $("body").css("cursor", "default");
     Assess_montage();
 
@@ -1138,14 +1138,162 @@ function createAnnotaionRow(anno_text, anno_onset, duration) {
     $('#AnnotaionTable').append(annotaion_row);
 }
 
-function plot_table_width_rearrange(show_annotaion) {
+document.getElementById('import_annotations_from_file').addEventListener('change', analysis_imported_annotaion_file, false);
 
-    var channel_name_width = settings['channelWidth'];
-    if (settings['AlwaysShowAnnotaionsTable'] == 1) {
-        show_annotaion = 1;
+function analysis_imported_annotaion_file(e) {
+    if (!e.target.files[0]) {
+        return;
     };
+    annotaitonFile = {};
+    annotaitonFile.fileName = e.target.files[0];
+    var start = 8;
+    var stop = 256;
+    var file = annotaitonFile.fileName;
+    var reader = new FileReader();
+    var blob = file.slice(start, stop);
+    $("body").css("cursor", "progress");
+    reader.readAsBinaryString(blob);
+    return reader.onloadend = function() {
+        var data = reader.result;
+        annotaitonFile.start_date = data.slice(160, 168).trim();
+        annotaitonFile.start_time = data.slice(168, 176).trim();
+        annotaitonFile.local_patient_id = data.slice(0, 80).trim();
+        annotaitonFile.local_recording_id = data.slice(80, 160).trim();
+        annotaitonFile.start_date = data.slice(160, 168).trim();
+        annotaitonFile.start_time = data.slice(168, 176).trim();
+        annotaitonFile.header_bytes_count = parseFloat(data.slice(176, 184).trim());
+        annotaitonFile.reserved = data.slice(184, 228).trim();
+        annotaitonFile.records_count = parseFloat(data.slice(228, 236).trim());
+        annotaitonFile.record_duration = parseFloat(data.slice(236, 244).trim());
+        if (annotaitonFile.start_date != edf.start_date) {
+            $("body").css("cursor", "default");
+            alert("Annotaions File'date doesn't match signal file'data");
+            return;
+        } else if (annotaitonFile.start_time != edf.start_time) {
+            $("body").css("cursor", "default");
+            alert("Annotaions File' start time doesn't match signal file start time");
+            return;
+        };
+        start = 250;
+        stop = annotaitonFile.header_bytes_count + 1;
+        reader = new FileReader();
+        blob = file.slice(start, stop);
+        reader.readAsBinaryString(blob);
+        return reader.onloadend = function() {
+            data = reader.result.trim();
+            var annotations_ch_exist = 0;
+            var pointer = 4;
+            var channels_count = parseFloat(data.slice(0, pointer).trim());
+            var Annotaion_cH_index = 0;
+            var ch;
+            for (i = 0; i < channels_count; i++) {
+                ch = data.slice(pointer, pointer + 16).trim()
+                if (ch == "EDF Annotations") {
+                    annotations_ch_exist = 1;
+                    annotaitonFile["Annotaion_cH_index"] = Annotaion_cH_index;
+                    break;
+                }
+                pointer = pointer + 16;
+                Annotaion_cH_index++;
+            }
+            if (annotations_ch_exist == 0) {
+                $("body").css("cursor", "default");
+                alert('No annotaions channel was found')
+                return;
+            }
+            pointer = 4 + 216 * channels_count + Annotaion_cH_index * 8;
+            annotaitonFile["Annotaion_ch_bytes_per_record"] = data.slice(pointer, pointer + 8).trim() * 2;
+            pointer = 4 + 216 * channels_count;
+            annotaitonFile["bytes_per_record"] = 0;
+            annotaitonFile["Annotaion_ch_bytes_offset"] = 0;
+            for (i = 0; i < channels_count; i++) {
+                ch = data.slice(pointer, pointer + 8).trim()
+                annotaitonFile["bytes_per_record"] = annotaitonFile["bytes_per_record"] + ch * 2;
+                if (i < annotaitonFile["Annotaion_cH_index"]) {
+                    annotaitonFile["Annotaion_ch_bytes_offset"] = annotaitonFile["Annotaion_ch_bytes_offset"] + ch * 2;
 
-    var annotation_width = 363 * settings['EDFplusAnnotaionsTable'];
+                }
+                pointer = pointer + 8;
+            }
+            annotaitonFile.annotaion_record_reading = 0;
+            annotaitonFile.annotations_list = [];
+            annotaitonFile.channel_block_start = annotaitonFile.header_bytes_count - 1 + annotaitonFile.Annotaion_ch_bytes_offset + annotaitonFile.annotaion_record_reading * annotaitonFile.bytes_per_record;
+            $("#loadAnnotationModule").modal("show");
+            Annotaiton_File_Read_Segment_Annotatons();
+        }
+
+    }
+
+    function Annotaiton_File_Read_Segment_Annotatons() {
+        var buf, anno_box, anno_box_ind, array8, anno, anno_start, duration_start, anno_onset, duration, anno_text, annotaion_row, annotaion_text, annotation_time, ID;
+        var end = annotaitonFile.channel_block_start + annotaitonFile.Annotaion_ch_bytes_per_record;
+        var block = [];
+        var blob = annotaitonFile.fileName.slice(annotaitonFile.channel_block_start, end);
+        var reader = new FileReader();
+        reader.readAsArrayBuffer(blob);
+        reader.onloadend = function() {
+            annotaitonFile.annotaion_record_reading = annotaitonFile.annotaion_record_reading + 1;
+            annotaitonFile.channel_block_start = annotaitonFile.header_bytes_count - 1 + annotaitonFile.Annotaion_ch_bytes_offset + annotaitonFile.annotaion_record_reading * annotaitonFile.bytes_per_record;
+            buf = reader.result;
+            array8 = new Uint8Array(buf);
+            for (_ in array8) {
+                block.push(parseFloat(array8[_]))
+            }
+            anno_box = [];
+            for (var _ = 0; _ < block.length - 1; _++) {
+                if (block[_] == 20 && block[_ + 1] == 0) {
+                    anno_box.push(_);
+                };
+            };
+            anno_box_ind = [];
+            for (var _ = 0; _ < anno_box.length - 1; _++) {
+                anno_box_ind.push([anno_box[_], anno_box[_ + 1]])
+            };
+            for (_ in anno_box_ind) {
+                anno = block.slice(anno_box_ind[_][0] + 2, anno_box_ind[_][1]);
+                anno_start = anno.indexOf(20);
+                if (anno.includes(21)) {
+                    duration_start = anno.indexOf(21);
+                    anno_onset = String.fromCharCode.apply(null, anno.slice(1, duration_start));
+                    anno_onset = parseFloat(anno_onset);
+                    duration = String.fromCharCode.apply(null, anno.slice(duration_start + 1, anno_start));
+                    duration = parseFloat(duration);
+                } else {
+                    anno_onset = String.fromCharCode.apply(null, anno.slice(1, anno_start));
+                    anno_onset = parseFloat(anno_onset);
+                    duration = 0;
+                }
+
+                anno_text = String.fromCharCode.apply(null, anno.slice(anno_start + 1, ));
+                ID = generagteIDCode(anno_text, anno_onset, duration);
+                if (edf.file_duration < anno_onset) {
+                    $("body").css("cursor", "default");
+                    alert('Annotaions dont match the length of the signal file');
+                    return;
+                }
+                annotaitonFile.annotations_list.push([anno_text, anno_onset, duration, ID]);
+
+            };
+            if (annotaitonFile.annotaion_record_reading <= annotaitonFile.records_count) {
+                var progressVal = (annotaitonFile.annotaion_record_reading / annotaitonFile.records_count) * 100;
+                $('#loadingProgressBar').css('width', progressVal + '%');
+                Annotaiton_File_Read_Segment_Annotatons();
+            } else {
+                $("#loadAnnotationModule").modal("hide");
+                edf['Annotations'] = {};
+                edf['Annotations'].read_annotaion = 1;
+                edf['Annotations']['annotations_list'] = annotaitonFile.annotations_list;
+                AnalysisAnnotatons();
+            }
+        }
+    }
+
+}
+
+function plot_table_width_rearrange() {
+    var channel_name_width = settings['channelWidth'];
+    var show_annotaion = settings['AlwaysShowAnnotaionsTable'];
+    var annotation_width = 363 * show_annotaion;
     $('.FirstCol').css('width', channel_name_width);
     $('.SecondCol').css('left', channel_name_width);
     var plotWidth = $('body').width() - annotation_width - channel_name_width;
@@ -1154,11 +1302,11 @@ function plot_table_width_rearrange(show_annotaion) {
         $('.ThirdCol').css('left', plotWidth + channel_name_width);
         $('.ThirdCol').css('visibility', 'visible');
         $('#annotaion_box').css('height', $(window).height() - 113);
-        $('#annotaionsTableScrol').css('height', $('#annotaion_box').height() - 140);
+        $('#annotaionsTableScrol').css('height', $('#annotaion_box').height() - 150);
     } else {
         plotWidth = plotWidth + annotation_width;
         $('#annotaion_box').css('height', $('body').height() - 113);
-        $('#annotaionsTableScrol').css('height', $('#annotaion_box').height() - 140);
+        $('#annotaionsTableScrol').css('height', $('#annotaion_box').height() - 150);
         $('.ThirdCol').css('visibility', 'hidden');
         $('.SecondCol').css('width', plotWidth);
     }
@@ -1182,7 +1330,20 @@ function Assess_montage(data) {
     }
 
     if (edf.keepmontage == 0) {
-        $('#montageModal').modal('show');
+
+        const choosenMontage = montage[$('#montage').data('montageCode')];
+        const montage_EEG_list = choosenMontage['EEG']
+        const montage_EKG_list = choosenMontage['EKG']
+        const montage_other_list = choosenMontage['Other']
+
+        const EEGlength = montage_EEG_list.length + montage_EKG_list.length + montage_other_list.length;
+        if (EEGlength == 0) {
+
+            $('#montageModal').modal('show');
+        } else {
+            readEEG();
+        }
+
     } else {
         readEEG();
     };
@@ -1256,18 +1417,18 @@ function saveSettings() {
 }
 
 $('#settings_btn').on("click", function() {
-    var pos = (settings['channelWidth'] - 200) / 50;
+    var pos = (settings['channelWidth'] - 150) / 50;
     var showAllalways = settings['AlwaysShowAnnotaionsTable'];
     var onlyEDFplus = settings['EDFplusAnnotaionsTable'];
     $('#setting_CNW_slider').data('position', pos);
     $('#setting_CNW_slider').css('left', 30 * pos);
     if (showAllalways == 0 && onlyEDFplus == 0) {
         $('.SATob1').attr('checked', true);
-    } else if (showAllalways == 1 && onlyEDFplus == 1) {
-        $('.SATob3').attr('checked', true);
+        // }else if(showAllalways == 1 && onlyEDFplus == 1){
     } else {
-        $('.SATob2').attr('checked', true);
+        $('.SATob3').attr('checked', true);
     }
+
     $('#SettingsModal').modal('show');
 });
 
@@ -1292,11 +1453,7 @@ $('.SATob1').on("click", function() {
     settings['EDFplusAnnotaionsTable'] = 0;
     sizeChanged();
 });
-$('.SATob2').on("click", function() {
-    settings['AlwaysShowAnnotaionsTable'] = 0;
-    settings['EDFplusAnnotaionsTable'] = 1;
-    sizeChanged();
-});
+
 $('.SATob3').on("click", function() {
     settings['AlwaysShowAnnotaionsTable'] = 1;
     settings['EDFplusAnnotaionsTable'] = 1;
@@ -1316,10 +1473,10 @@ function Reseteverything() {
         var pos = 0;
         $('#setting_CNW_slider').data('position', pos);
         $('#setting_CNW_slider').css('left', 30 * pos);
-        $('.SATob2').attr('checked', true);
+        $('.SATob3').attr('checked', true);
         settings = {
-            'channelWidth': 200,
-            'AlwaysShowAnnotaionsTable': 0,
+            'channelWidth': 150,
+            'AlwaysShowAnnotaionsTable': 1,
             'EDFplusAnnotaionsTable': 1,
         };
         localStorage.removeItem('EDFViewer');
@@ -1362,7 +1519,7 @@ function Reseteverything() {
 function change_channel_name_width(pos) {
     $('#setting_CNW_slider').data('position', pos);
     $('#setting_CNW_slider').css('left', 30 * pos);
-    settings['channelWidth'] = 200 + 50 * pos;
+    settings['channelWidth'] = 150 + 50 * pos;
     sizeChanged();
 }
 
@@ -1893,7 +2050,7 @@ function readEEG() {
     if (edf['Annotations'].read_annotaion == 1 || settings['AlwaysShowAnnotaionsTable'] == 1) {
         annotaionTextHieght = 40;
     }
-    const EEGchDivHieght = ($(window).height() - 115 - annotaionTextHieght - timeScaleHieght * 2) / EEGlength; 
+    const EEGchDivHieght = ($(window).height() - 115 - annotaionTextHieght - timeScaleHieght * 2) / EEGlength; //113
     const EEGdivHieght = EEGchDivHieght * montage_EEG_list.length;
     var ampfactor = $('#amp').data("amplitudeCalibration");
     var EEGplotamp = EEGdivHieght * ampfactor * 0.26;
@@ -2230,7 +2387,7 @@ function readEEG() {
                 x: solidTimeLineslist[a],
                 y: 11,
                 showarrow: false,
-                text: timeText, 
+                text: timeText, // solidTimeLineslist[a],
             });
         };
         Plotly.plot('LowerTimeMarkDiv', plotdata, layout, {
@@ -2719,7 +2876,7 @@ function readEEG() {
                             color: '#0275d8',
                             width: 5,
                         },
-                    })
+                    });
                 }
 
                 if (plotAnnotaions == 1) {
@@ -2796,25 +2953,24 @@ function readEEG() {
                 Plotly.plot(ch + '_Otherplot', plotdata, layout, {
                     displayModeBar: false
                 });
-                var id = ch.toString().replace(/\s/g, ''); 
-
+                var id = create_modal_montage_id_code(ch, '_OTH_span_mm');
                 if ($("#montage").data('plotMontage') == 1) {
 
                     if (ch_in_montage == 0) {
-                        chDiv = $("<div class='ChDiv'><span id= '" + id + "_span' >" + ch + "</span></div>");
+                        chDiv = $("<div class='ChDiv'><span id= '" + id + "' >" + ch + "</span></div>");
                         chDiv.addClass('OthersDeactivate');
                     } else {
-                        chDiv = $("<div class='ChDiv OtherSpan'>" + ch + " (" + ch_dic[ch].channel_units + ")\n<span id= '" + ch + "_span' class='OtherSpan' style='' >min - max( " + min_max + " )</span></div>");
-
+                        chDiv = $("<div class='ChDiv OtherSpan'>" + ch + " (" + ch_dic[ch].channel_units + ")\nmin - max <span id= '" + id + "' class='OtherSpan OtherPlotMinMaxSpan' style='' >(" + min_max + ")</span></div>");
                     }
 
-                    chDiv.attr("id", id + '_div')
+                    chDiv.attr("id", ch + '_div')
                     chDiv.css("height", EEGchDivHieght);
                     if (EEGchDivHieght > 200) {
                         chDiv.css("padding-top", EEGchDivHieght / 3);
                     } else {
                         chDiv.css("padding-top", 0);
                     }
+
                     chDiv.css("padding-left", 5);
                     chDiv.css("background-color", '#dba436');
                     chDiv.css("color", '#222222');
@@ -2823,8 +2979,7 @@ function readEEG() {
                     $('#OtherchName').append(chDiv);
                 } else {
                     if (ch_in_montage == 1) {
-                        alert(id + ' - ' + min_max);
-                        $('#' + id + "_span").html("min - max( " + min_max + " )");
+                        $('#' + id).html("(" + min_max + ")");
                     }
                 }
                 domin = domin - seg;
